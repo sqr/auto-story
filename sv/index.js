@@ -1,9 +1,24 @@
 const express = require('express');
-const app = express();
+const multer  = require('multer')
+const path = require('path');
 const dotenv = require('dotenv');
+
+const app = express();
 dotenv.config();
 
 app.use(express.static('public'));
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+})
+
+// const upload = multer({dest: 'public/images'})
+var upload = multer({storage: storage})
 
 app.use(express.json());
 // middleware to handle post request
@@ -16,10 +31,47 @@ app.get('/', (req, res) => {
   res.send('listening');
 }) 
 
-app.post('/send_job', (req, res) => {
+app.post('/send_job', upload.single('upload'), (req, res) => {
+  const texto = req.body.texto;
+  const query = 
+    {
+      "template":{
+          "src":"https://www.dropbox.com/s/tgrde2h7gqhs0tb/template.aep?dl=1",
+          "composition":"main"
+          },
+          "assets": [
+              {
+              "src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/B.png",
+              "type": "image",
+              "layerName": "arriba"
+              },
+              {
+              "src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/A.png",
+              "type": "image",
+              "layerName": "abajo"
+              },
+              {
+              "type": "data",
+              "layerName": "texto",
+              "property": "Source Text",
+              "expression": texto
+              }
+          ],
+          "actions": {
+              "postrender": [
+                  {
+                      "module": "@nexrender/action-encode",
+                      "output": "output.mp4",
+                      "preset": "mp4"
+                  }
+              ]
+          }
+  };
+
   console.log(req.body)
-  res.send(req.body);    // echo the result back
+  res.send(query);    // echo the result back
 })
+
 
 const server = app.listen(process.env.PORT, () => {
   const host = server.address().address

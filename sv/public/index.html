@@ -8,8 +8,9 @@
 </head>
 <body>
   <h1>Holi Lokis!</h1>
-  <form action="/send_job" id="text" enctype="application/json" method="post">
+  <form action="/send_job" id="text" enctype="multipart/form-data" method="post">
     <textarea id="texto" name="texto" rows="4" cols="50">Texto para el template de After Effects</textarea>
+    <input type="file" name="upload">
     <input type="submit" value="Submit">
   </form>
 </body>
