@@ -1,41 +1,54 @@
-// const express = require('express');
-// const app = express();
+const express = require('express');
+const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 
-// app.get('/', (req, res) => {
-//   console.log('listening');
-//   res.send('listening');
-// }) 
+app.use(express.static('public'));
 
-// const server = app.listen(process.env.PORT, () => {
-//   const host = server.address().address
-//   const port = server.address().port
+app.use(express.json());
+// middleware to handle post request
+app.use(express.urlencoded({
+  extended: true
+}))
 
-//   console.log("Listening on %s port %s", host, port)
-// });
+app.get('/', (req, res) => {
+  console.log('listening');
+  res.send('listening');
+}) 
 
-const { createClient } = require('@nexrender/api')
-
-const client = createClient({
-    host: process.env.NEXRENDER_SERVER,
-    secret: process.env.NEXRENDER_SECRET,
-    polling: 1000,
+app.post('/send_job', (req, res) => {
+  console.log(req.body)
+  res.send(req.body);    // echo the result back
 })
 
-const main = async () => {
-    const result = await client.addJob({
-        template: {
-            src: process.env.TEST_PROJECT,
-            composition: 'main',
-        }
-    })
+const server = app.listen(process.env.PORT, () => {
+  const host = server.address().address
+  const port = server.address().port
 
-    result.on('created', job => console.log('project has been created'))
-    result.on('started', job => console.log('project rendering started'))
-    result.on('progress', (job, percents) => console.log('project is at: ' + percents + '%'))
-    result.on('finished', job => console.log('project rendering finished'))
-    result.on('error', err => console.log('project rendering error', err))
-}
+  console.log("Listening on %s port %s", host, port)
+});
 
-main().catch(console.error);
+// const { createClient } = require('@nexrender/api')
+
+// const client = createClient({
+//     host: process.env.NEXRENDER_SERVER,
+//     secret: process.env.NEXRENDER_SECRET,
+//     polling: 1000,
+// })
+
+// const main = async () => {
+//     const result = await client.addJob({
+//         template: {
+//             src: process.env.TEST_PROJECT,
+//             composition: 'main',
+//         }
+//     })
+
+//     result.on('created', job => console.log('project has been created'))
+//     result.on('started', job => console.log('project rendering started'))
+//     result.on('progress', (job, percents) => console.log('project is at: ' + percents + '%'))
+//     result.on('finished', job => console.log('project rendering finished'))
+//     result.on('error', err => console.log('project rendering error', err))
+// }
+
+// main().catch(console.error);
