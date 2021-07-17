@@ -1,5 +1,6 @@
 const express = require('express');
-const multer  = require('multer')
+const multer  = require('multer');
+const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = req.body.texto;
+  const fileLocation = "http://172.24.24.3:3000/images/"
   const query = 
     {
       "template":{
@@ -41,7 +43,8 @@ app.post('/send_job', upload.single('upload'), (req, res) => {
           },
           "assets": [
               {
-              "src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/B.png",
+              //"src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/B.png",
+              "src": fileLocation + req.file.filename,
               "type": "image",
               "layerName": "arriba"
               },
@@ -67,8 +70,22 @@ app.post('/send_job', upload.single('upload'), (req, res) => {
               ]
           }
   };
+  let config = {
+    headers: {
+      'nexrender-secret': 'peine',
+    }
+  }
+  axios
+    .post('http://localhost:3050/api/v1/jobs', query, config)
+    .then(res  => {
+      console.log(res)
+    })
+    .catch(error => {
+      console.error(error)
+    })
 
   console.log(req.body)
+  console.log(upload)
   res.send(query);    // echo the result back
 })
 
