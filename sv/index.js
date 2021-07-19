@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = req.body.texto;
-  const fileLocation = "http://172.24.24.3:3000/images/"
+  const fileLocation = `http://${process.env.WSL2_IP}:3000/images/`
   const query = 
     {
       "template":{
