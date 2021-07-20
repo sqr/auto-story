@@ -89,6 +89,29 @@ app.post('/send_job', upload.single('upload'), (req, res) => {
   res.send(query);    // echo the result back
 })
 
+app.get('/jobs', (req, res) => {
+  console.log('jobs listing');
+  let config = {
+    headers: {
+      'nexrender-secret': 'peine',
+    }
+  }
+  var htmlRes = "Lista de trabajos:\n"
+
+  axios
+    .get('http://localhost:3050/api/v1/jobs', config)
+    .then(response  => {
+      for (i = 0; i < response.data.length; i++) {
+        console.log(response.data[i].uid)
+        uidInfo = response.data[i].uid
+        htmlRes = htmlRes + `<li>${uidInfo}</li>`
+      }
+      res.send(htmlRes)
+    })
+    .catch(error => {
+      console.error(error)
+    })
+}) 
 
 const server = app.listen(process.env.PORT, () => {
   const host = server.address().address
