@@ -101,10 +101,12 @@ app.get('/jobs', (req, res) => {
   axios
     .get('http://localhost:3050/api/v1/jobs', config)
     .then(response  => {
+      console.log(response)
       for (i = 0; i < response.data.length; i++) {
         console.log(response.data[i].uid)
         uidInfo = response.data[i].uid
-        htmlRes = htmlRes + `<li>${uidInfo}</li>`
+        state = response.data[i].state
+        htmlRes = htmlRes + `<li>${uidInfo} - State: ${state}</li>`
       }
       res.send(htmlRes)
     })
