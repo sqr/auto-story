@@ -3,6 +3,7 @@ const multer  = require('multer');
 const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
+const { Pool, Client } = require('pg')
 
 const app = express();
 dotenv.config();
