@@ -28,6 +28,19 @@ app.use(express.urlencoded({
   extended: true
 }))
 
+const client = new Client({
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT,
+})
+
+client.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 app.get('/', (req, res) => {
   console.log('listening');
   res.send('listening');
