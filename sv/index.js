@@ -3,8 +3,7 @@ const multer  = require('multer');
 const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
-const { Pool, Client } = require('pg')
-
+const db = require('./db')
 const app = express();
 dotenv.config();
 
@@ -28,23 +27,17 @@ app.use(express.urlencoded({
   extended: true
 }))
 
-const client = new Client({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-})
-
-client.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-
 app.get('/', (req, res) => {
   console.log('listening');
   res.send('listening');
 }) 
+
+app.get('/user/:username', async (req, res) => {
+  const results = await db.query("select * from users where username = $1", [req.params.username])
+  console.log(req.params.username)
+  console.log(results.rows[0])
+  res.send(results.rows[0])
+})
 
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = req.body.texto;
