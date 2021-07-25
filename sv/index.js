@@ -3,6 +3,7 @@ const multer  = require('multer');
 const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 const db = require('./db')
 const app = express();
 dotenv.config();
