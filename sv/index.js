@@ -50,8 +50,8 @@ app.post('/send_job', upload.single('upload'), (req, res) => {
           },
           "assets": [
               {
-              //"src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/B.png",
-              "src": fileLocation + req.file.filename,
+              "src": "file:///D:/Bracero Dropbox/Arturo Bracero/dev/instagram-story-creator/template/B.png",
+              //"src": fileLocation + req.file.filename,
               "type": "image",
               "layerName": "arriba"
               },
@@ -86,6 +86,13 @@ app.post('/send_job', upload.single('upload'), (req, res) => {
     .post('http://localhost:3050/api/v1/jobs', query, config)
     .then(res  => {
       console.log(res)
+      db.query("INSERT INTO jobs(job_id, user_id, started, processing, completed, error)VALUES($1, 1, false, false, false, false) ", [res.data.uid])
+      .then(res => {
+        console.log('res 2: ' + res)
+      })
+      .catch(error => {
+        console.error(error)
+      })
     })
     .catch(error => {
       console.error(error)
