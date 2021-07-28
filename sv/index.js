@@ -40,7 +40,7 @@ app.get('/user/:username', async (req, res) => {
 })
 
 app.post('/send_job', upload.single('upload'), (req, res) => {
-  const texto = req.body.texto;
+  const texto = `'${req.body.texto}'`;
   const fileLocation = `http://${process.env.WSL2_IP}:3000/images/`
   const query = 
     {
