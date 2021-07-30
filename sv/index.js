@@ -39,6 +39,14 @@ app.get('/user/:username', async (req, res) => {
   res.send(results.rows[0])
 })
 
+
+app.get('/db_jobs', async (req, res) => {
+  const results = await db.query("select * from jobs")
+  //console.log(req.params.username)
+  console.log(results.rows)
+  res.send(results.rows)
+})
+
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = `'${req.body.texto}'`;
   const fileLocation = `http://${process.env.WSL2_IP}:3000/images/`
