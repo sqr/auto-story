@@ -64,6 +64,32 @@ app.get('/nexrender_jobs', (req, res) => {
   })
 })
 
+app.get('/jobs_processed', async (req,res) => {
+  const db_jobs = await db.query("select * from jobs")
+  let config = {
+    headers: {
+      'nexrender-secret': 'peine',
+    }
+  }
+  const nexrender_jobs = await axios.get('http://localhost:3050/api/v1/jobs', config)
+  let result = []
+  for (i = 0; i < nexrender_jobs.data.length; i++) {
+    for ( j = 0; j < db_jobs.rows.length; j++) {
+      if (db_jobs.rows[j].job_id === nexrender_jobs.data[i].uid) {
+        var temp = nexrender_jobs.data[i]
+        temp["user_id"] = (db_jobs.rows[j].user_id)
+        result.push(temp)
+      } else {
+        var temp = nexrender_jobs.data[i]
+        temp["user_id"] = 0
+        result.push(nexrender_jobs.data[i])
+      }
+    }
+  }
+
+  res.send(result)
+})
+
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = `'${req.body.texto}'`;
   const fileLocation = `http://${process.env.WSL2_IP}:3000/images/`
