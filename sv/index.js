@@ -47,6 +47,23 @@ app.get('/db_jobs', async (req, res) => {
   res.send(results.rows)
 })
 
+app.get('/nexrender_jobs', (req, res) => {
+  let config = {
+    headers: {
+      'nexrender-secret': 'peine',
+    }
+  }
+  axios
+  .get('http://localhost:3050/api/v1/jobs', config)
+  .then(response  => {
+    console.log(response.data)
+    res.send(response.data)
+  })
+  .catch(error => {
+    console.error(error)
+  })
+})
+
 app.post('/send_job', upload.single('upload'), (req, res) => {
   const texto = `'${req.body.texto}'`;
   const fileLocation = `http://${process.env.WSL2_IP}:3000/images/`
