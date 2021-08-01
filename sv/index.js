@@ -42,8 +42,6 @@ app.get('/user/:username', async (req, res) => {
 
 app.get('/db_jobs', async (req, res) => {
   const results = await db.query("select * from jobs")
-  //console.log(req.params.username)
-  console.log(results.rows)
   res.send(results.rows)
 })
 

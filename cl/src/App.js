@@ -1,28 +1,20 @@
-import './App.css';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-function App() {
-  const darkTheme = createTheme({
-    palette: {
-      type: 'dark',
-    },
-  });
+import './App.css';
+
+import JobList from './components/JobList';
+import Start from './components/Start';
+
+
+const App = () => {
   return (
-    <ThemeProvider theme={darkTheme}>
-    <CssBaseline/>
-      <Container maxWidth="sm">
-        <Box my={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Create React App v4-beta example
-          </Typography>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+    <Router>
+      <div>
+        <Route exact path='/' component={Start} />
+        <Route path='/job_list' component={JobList} />
+      </div>
+    </Router>
+  )
 }
 
 export default App;
