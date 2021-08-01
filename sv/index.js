@@ -65,7 +65,7 @@ app.get('/nexrender_jobs', (req, res) => {
 })
 
 app.get('/jobs_processed', async (req,res) => {
-  const db_jobs = await db.query("select * from jobs")
+  const db_jobs = await db.query("select a.id, a.job_id, a.user_id, b.username user_id from jobs a join users b on a.user_id = b.user_id")
   let config = {
     headers: {
       'nexrender-secret': 'peine',
@@ -77,16 +77,15 @@ app.get('/jobs_processed', async (req,res) => {
     for ( j = 0; j < db_jobs.rows.length; j++) {
       if (db_jobs.rows[j].job_id === nexrender_jobs.data[i].uid) {
         var temp = nexrender_jobs.data[i]
-        temp["user_id"] = (db_jobs.rows[j].user_id)
+        temp["created_by"] = (db_jobs.rows[j].user_id)
         result.push(temp)
       } else {
         var temp = nexrender_jobs.data[i]
-        temp["user_id"] = 0
+        temp["created_by"] = 0
         result.push(nexrender_jobs.data[i])
       }
     }
   }
-
   res.send(result)
 })
 
