@@ -3,11 +3,15 @@ const multer  = require('multer');
 const axios = require('axios');
 const path = require('path');
 const dotenv = require('dotenv');
-const db = require('./db')
+const db = require('./db');
+const cors = require('cors');
 const app = express();
 dotenv.config();
 
 app.use(express.static('public'));
+
+app.use(cors());
+
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -78,9 +82,9 @@ app.get('/jobs_processed', async (req,res) => {
         temp["created_by"] = (db_jobs.rows[j].user_id)
         result.push(temp)
       } else {
-        var temp = nexrender_jobs.data[i]
-        temp["created_by"] = 0
-        result.push(nexrender_jobs.data[i])
+        //var temp = nexrender_jobs.data[i]
+        //temp["created_by"] = 0
+        //result.push(nexrender_jobs.data[i])
       }
     }
   }
