@@ -82,9 +82,10 @@ app.get('/jobs_processed', async (req,res) => {
         temp["created_by"] = (db_jobs.rows[j].user_id)
         result.push(temp)
       } else {
-        //var temp = nexrender_jobs.data[i]
-        //temp["created_by"] = 0
-        //result.push(nexrender_jobs.data[i])
+        var temp2 = nexrender_jobs.data[i]
+        temp2["created_by"] = 'No user'
+        result.push(temp2)
+        break
       }
     }
   }
