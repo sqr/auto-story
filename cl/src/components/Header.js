@@ -30,7 +30,7 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Instagram Story Creator
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
