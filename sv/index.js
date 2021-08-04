@@ -74,21 +74,27 @@ app.get('/jobs_processed', async (req,res) => {
     }
   }
   const nexrender_jobs = await axios.get('http://localhost:3050/api/v1/jobs', config)
-  let result = []
-  for (i = 0; i < nexrender_jobs.data.length; i++) {
-    for ( j = 0; j < db_jobs.rows.length; j++) {
-      if (db_jobs.rows[j].job_id === nexrender_jobs.data[i].uid) {
-        var temp = nexrender_jobs.data[i]
-        temp["created_by"] = (db_jobs.rows[j].user_id)
+    var result = []
+    var temp_db = []
+    for (let i = 0; i < db_jobs.rows.length; i++) {
+      temp_db.push(db_jobs.rows[i].job_id)
+      temp_db.push(db_jobs.rows[i].user_id)      
+    }
+    
+    for (let i = 0; i < nexrender_jobs.data.length; i++) {
+
+      let temp = nexrender_jobs.data[i]
+
+      if (temp_db.indexOf(nexrender_jobs.data[i].uid) === -1) {
+        temp['created_by'] = 'No username'
         result.push(temp)
       } else {
-        var temp2 = nexrender_jobs.data[i]
-        temp2["created_by"] = 'No user'
-        result.push(temp2)
-        break
+        let username_position = temp_db.indexOf(nexrender_jobs.data[i].uid)
+        let username = temp_db[username_position+1]
+        temp['created_by'] = username
+        result.push(temp)
       }
     }
-  }
   res.send(result)
 })
 
