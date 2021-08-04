@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import Header from './Header';
+
 function Start() {
   const darkTheme = createTheme({
     palette: {
@@ -14,6 +16,7 @@ function Start() {
   return (
     <ThemeProvider theme={darkTheme}>
     <CssBaseline/>
+    <Header></Header>
       <Container maxWidth="sm">
         <Box my={4}>
           <Typography variant="h4" component="h1" gutterBottom>
