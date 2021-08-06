@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   fullList: {
     width: 'auto',
   },
+  MuiAppBar: {
+    background: '#31796a',
+  },
 }));
 
 const Header = () => {
@@ -62,7 +65,7 @@ const Header = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Home', 'New Video', 'All videos', 'Drafts'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
@@ -83,7 +86,7 @@ const Header = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.MuiAppBar}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
             <MenuIcon />
