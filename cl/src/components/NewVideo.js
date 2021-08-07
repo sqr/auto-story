@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Header from './Header';
 import Footer from './Footer';
+import ImageCrop from './ImageCrop';
 
 function NewVideo() {
   const darkTheme = createTheme({
@@ -24,6 +25,7 @@ function NewVideo() {
             New Video
           </Typography>
         </Box>
+        <ImageCrop />
         <Footer/>
       </Container>
     </ThemeProvider>

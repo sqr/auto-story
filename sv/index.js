@@ -22,7 +22,6 @@ var storage = multer.diskStorage({
   }
 })
 
-// const upload = multer({dest: 'public/images'})
 var upload = multer({storage: storage})
 
 app.use(express.json());
@@ -96,6 +95,11 @@ app.get('/jobs_processed', async (req,res) => {
       }
     }
   res.send(result)
+})
+
+app.post('/upload_image', upload.single('upload'), (req, res) => {  
+  console.log(req.file)
+  res.send('ok');
 })
 
 app.post('/send_job', upload.single('upload'), (req, res) => {
