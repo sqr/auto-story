@@ -5,6 +5,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const db = require('./db');
 const cors = require('cors');
+const { fstat } = require('fs');
+const fs = require('fs')
 const app = express();
 dotenv.config();
 
@@ -24,10 +26,11 @@ var storage = multer.diskStorage({
 
 var upload = multer({storage: storage})
 
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 // middleware to handle post request
 app.use(express.urlencoded({
-  extended: true
+  extended: true,
+  limit: '50mb'
 }))
 
 app.get('/', (req, res) => {
@@ -97,8 +100,16 @@ app.get('/jobs_processed', async (req,res) => {
   res.send(result)
 })
 
-app.post('/upload_image', upload.single('upload'), (req, res) => {  
+app.post('/upload_image', (req, res) => {  
   console.log(req.file)
+  var img = req.body.upload
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = Buffer.from(data, 'base64');
+  fs.writeFile('public/images/image.png', buf, (err) => { 
+    if (err) { 
+      console.log(err); 
+    }
+  });
   res.send('ok');
 })
 
