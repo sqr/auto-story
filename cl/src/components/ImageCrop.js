@@ -25,16 +25,6 @@ function generateDownload(canvas, crop) {
   canvas.toBlob(
     (blob) => {
       const previewUrl = window.URL.createObjectURL(blob);
-      console.log(previewUrl)
-      axios.post(`${process.env.REACT_APP_API_SERVER}/upload_image`, {
-        upload: previewUrl,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
       const anchor = document.createElement('a');
       anchor.download = 'cropPreview.png';
       anchor.href = URL.createObjectURL(blob);
@@ -45,6 +35,24 @@ function generateDownload(canvas, crop) {
     'image/png',
     1
   );
+}
+
+function uploadToServer(canvas, crop) {
+  if(!crop || !canvas) {
+    return;
+  }
+  var imageFile = canvas.toDataURL("image/jpeg", 1.0);
+  console.log(imageFile)
+  axios.post(`${process.env.REACT_APP_API_SERVER}/upload_image`, {
+    upload: imageFile,
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  }); 
+  
 }
 
 export default function App() {
@@ -136,7 +144,7 @@ export default function App() {
       </div>
       <Button variant="contained" color="primary" component="span" disabled={!completedCrop?.width || !completedCrop?.height}
         onClick={() =>
-          generateDownload(previewCanvasRef.current, completedCrop)
+          uploadToServer(previewCanvasRef.current, completedCrop)
         }>
           Download Image
         </Button>
