@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function generateDownload(canvas, crop) {
   if (!crop || !canvas) {
     return;
@@ -74,6 +73,30 @@ export default function App() {
   const onLoad = useCallback((img) => {
     imgRef.current = img;
   }, []);
+
+  const getResizedCanvas = () => {
+    const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
+    const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
+    const tmpCanvas = document.createElement("canvas");
+    tmpCanvas.width = Math.ceil(crop.width*scaleX);
+    tmpCanvas.height = Math.ceil(crop.height*scaleY);
+
+    const ctx = tmpCanvas.getContext("2d");
+    const image = imgRef.current;
+    ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width*scaleX,
+        crop.height*scaleY,
+    );
+
+    return tmpCanvas;
+  }
 
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
@@ -144,7 +167,7 @@ export default function App() {
       </div>
       <Button variant="contained" color="primary" component="span" disabled={!completedCrop?.width || !completedCrop?.height}
         onClick={() =>
-          uploadToServer(previewCanvasRef.current, completedCrop)
+          uploadToServer(getResizedCanvas(), completedCrop)
         }>
           Download Image
         </Button>
