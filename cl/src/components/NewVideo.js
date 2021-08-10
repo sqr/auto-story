@@ -8,6 +8,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Header from './Header';
 import Footer from './Footer';
 import ImageCrop from './ImageCrop';
+import TextInput from './TextInput';
+import PreviewDisplay from './PreviewDisplay';
+
 
 function NewVideo() {
   const darkTheme = createTheme({
@@ -26,6 +29,8 @@ function NewVideo() {
           </Typography>
         </Box>
         <ImageCrop />
+        <TextInput />
+        <PreviewDisplay />
         <Footer/>
       </Container>
     </ThemeProvider>
