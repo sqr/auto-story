@@ -10,7 +10,9 @@ import Footer from './Footer';
 import ImageCrop from './ImageCrop';
 import TextInput from './TextInput';
 import PreviewDisplay from './PreviewDisplay';
+import VideoDataContext from './VideoData/VideoData';
 
+import { useState } from 'react';
 
 function NewVideo() {
   const darkTheme = createTheme({
@@ -18,6 +20,10 @@ function NewVideo() {
       type: 'dark',
     },
   });
+
+  const [storyText, setStoryText] = useState('Texto loler');
+  const value = { storyText, setStoryText };
+
   return (
     <ThemeProvider theme={darkTheme}>
     <CssBaseline/>
@@ -28,9 +34,11 @@ function NewVideo() {
             New Video
           </Typography>
         </Box>
-        <ImageCrop />
-        <TextInput />
-        <PreviewDisplay />
+        <VideoDataContext.Provider value={value}>
+          <ImageCrop />
+          <TextInput />
+          <PreviewDisplay />
+        </VideoDataContext.Provider>
         <Footer/>
       </Container>
     </ThemeProvider>

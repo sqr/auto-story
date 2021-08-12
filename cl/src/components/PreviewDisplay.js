@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+
+import VideoDataContext from './VideoData/VideoData';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SimplePaper() {
   const classes = useStyles();
   const canvasRef = React.useRef(null)
+
+  const state = useContext(VideoDataContext);
+
   function draw() {
     var canvas = canvasRef.current
     var ctx = canvas.getContext("2d");
     ctx.font = "30px Arial";
-    ctx.fillText("Hello World",10,50);
+    ctx.fillText(state.storyText,10,50);
   }
 
   return (

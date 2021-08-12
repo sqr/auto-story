@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+
+import VideoDataContext from './VideoData/VideoData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function LayoutTextFields() {
   const classes = useStyles();
 
+  const { storyText, setStoryText } = useContext(VideoDataContext);
+
   return (
     <div className={classes.root}>       
       <div>
@@ -23,7 +27,7 @@ export default function LayoutTextFields() {
           id="outlined-full-width"
           label="Label"
           style={{ margin: 8 }}
-          placeholder="Placeholder"
+          placeholder={storyText}
           helperText="Full width!"
           fullWidth
           margin="normal"
@@ -31,6 +35,8 @@ export default function LayoutTextFields() {
             shrink: true,
           }}
           variant="outlined"
+          name='storyText'
+          onChange={e => setStoryText(e.target.value)}
         />
       </div>
     </div>
