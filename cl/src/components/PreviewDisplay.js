@@ -22,16 +22,17 @@ export default function SimplePaper() {
 
   const state = useContext(VideoDataContext);
 
-  function draw() {
+  React.useEffect(() => {
     var canvas = canvasRef.current
     var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "30px Arial";
     ctx.fillText(state.storyText,10,50);
-  }
+  })
 
   return (
     <div>
-    <canvas ref={canvasRef} id="myCanvas" className={classes.root} onClick={draw}></canvas>
+    <canvas ref={canvasRef} id="myCanvas" className={classes.root}></canvas>
     </div>
   );
 }
