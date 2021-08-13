@@ -14,6 +14,17 @@ const useStyles = makeStyles((theme) => ({
     },
     backgroundColor: 'white',
   },
+  canvas: {
+    width: 500,
+    backgroundColor: 'white',
+    paddingLeft: 0,
+    paddingRight: 0,
+    marginBottom: 50,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'block',
+    boxShadow: "0px 2px 5px rgba(255, 255, 255, 0.7)",
+  }
 }));
 
 export default function SimplePaper() {
@@ -26,13 +37,13 @@ export default function SimplePaper() {
     var canvas = canvasRef.current
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "30px Arial";
-    ctx.fillText(state.storyText,10,50);
+    ctx.font = "100px Arial";
+    ctx.fillText(state.storyText, 35, 150);
   })
 
   return (
     <div>
-    <canvas ref={canvasRef} id="myCanvas" className={classes.root}></canvas>
+    <canvas ref={canvasRef} id="myCanvas" width="540px" height="960px" className={classes.canvas}></canvas>
     </div>
   );
 }
