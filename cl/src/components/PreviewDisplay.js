@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import VideoDataContext from './VideoData/VideoData';
 
@@ -24,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     display: 'block',
     boxShadow: "0px 2px 5px rgba(255, 255, 255, 0.7)",
-  }
+  },
+  input: {
+    display: 'none',
+  },
 }));
 
 export default function SimplePaper() {
@@ -43,7 +47,7 @@ export default function SimplePaper() {
 
   return (
     <div>
-    <canvas ref={canvasRef} id="myCanvas" width="540px" height="960px" className={classes.canvas}></canvas>
+      <canvas ref={canvasRef} id="myCanvas" width="540px" height="960px" className={classes.canvas}></canvas>
     </div>
   );
 }

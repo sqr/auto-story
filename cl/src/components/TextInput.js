@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import VideoDataContext from './VideoData/VideoData';
 
@@ -19,6 +20,11 @@ export default function LayoutTextFields() {
   const classes = useStyles();
 
   const { storyText, setStoryText } = useContext(VideoDataContext);
+  const [ formValue, setFormValue ] = useState('')
+
+  function updatePreviewText() {
+    setStoryText(formValue)
+  }
 
   return (
     <div className={classes.root}>       
@@ -36,8 +42,11 @@ export default function LayoutTextFields() {
           }}
           variant="outlined"
           name='storyText'
-          onChange={e => setStoryText(e.target.value)}
+          onChange={e => setFormValue(e.target.value)}
         />
+        <Button variant="contained" color="primary" component="span" onClick={updatePreviewText}>
+          Update preview
+        </Button>
       </div>
     </div>
   );
