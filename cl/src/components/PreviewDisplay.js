@@ -40,7 +40,10 @@ export default function SimplePaper() {
   React.useEffect(() => {
     var canvas = canvasRef.current
     var ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    var background = new Image();
+    background.src = 'https://i.pinimg.com/originals/6d/07/66/6d076650ee81383131f07c887b9ea0f0.jpg'
+    ctx.drawImage(background,0,0);   
     ctx.font = "100px Arial";
     ctx.fillText(state.storyText, 35, 150);
   })
