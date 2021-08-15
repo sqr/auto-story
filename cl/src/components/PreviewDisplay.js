@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
 import VideoDataContext from './VideoData/VideoData';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,16 +16,17 @@ const useStyles = makeStyles((theme) => ({
     },
     backgroundColor: 'white',
   },
-  canvas: {
-    width: 500,
-    backgroundColor: 'white',
-    paddingLeft: 0,
-    paddingRight: 0,
-    marginBottom: 50,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    display: 'block',
-    boxShadow: "0px 2px 5px rgba(255, 255, 255, 0.7)",
+  canvasTop: {
+    position: 'absolute',
+    top: 3500,
+    left: 0,
+    zIndex: 1,
+  },
+  canvasBot: {
+    position: 'absolute',
+    top: 3500,
+    left: 0,
+    zIndex: 0,
   },
   input: {
     display: 'none',
@@ -40,17 +42,20 @@ export default function SimplePaper() {
   React.useEffect(() => {
     var canvas = canvasRef.current
     var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    var background = new Image();
+    /* var background = new Image();
     background.src = 'https://i.pinimg.com/originals/6d/07/66/6d076650ee81383131f07c887b9ea0f0.jpg'
-    ctx.drawImage(background,0,0);   
+    ctx.drawImage(background,0,0);    */
+    
     ctx.font = "100px Arial";
     ctx.fillText(state.storyText, 35, 150);
   })
 
   return (
     <div>
-      <canvas ref={canvasRef} id="myCanvas" width="540px" height="960px" className={classes.canvas}></canvas>
+      <canvas ref={canvasRef} id="textCanvas" width="540px" height="960px" className={classes.canvasTop}></canvas>
+      <canvas id="myCanvas" width="540px" height="960px" className={classes.canvasBot}></canvas>
     </div>
   );
 }

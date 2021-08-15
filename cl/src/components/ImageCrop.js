@@ -104,7 +104,8 @@ export default function App() {
     }
 
     const image = imgRef.current;
-    const canvas = previewCanvasRef.current;
+    // const canvas = previewCanvasRef.current;
+    const canvas = document.getElementById('myCanvas');
     const crop = completedCrop;
 
     const scaleX = image.naturalWidth / image.width;
