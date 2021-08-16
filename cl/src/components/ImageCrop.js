@@ -113,8 +113,8 @@ export default function App() {
     const ctx = canvas.getContext('2d');
     const pixelRatio = window.devicePixelRatio;
 
-    canvas.width = crop.width * pixelRatio;
-    canvas.height = crop.height * pixelRatio;
+    canvas.width = 540;
+    canvas.height = 960;
 
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     ctx.imageSmoothingQuality = 'high';
@@ -127,8 +127,8 @@ export default function App() {
       crop.height * scaleY,
       0,
       0,
-      crop.width,
-      crop.height
+      540,
+      960
     );
   }, [completedCrop]);
 
@@ -162,7 +162,8 @@ export default function App() {
           // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
           style={{
             width: Math.round(completedCrop?.width ?? 0),
-            height: Math.round(completedCrop?.height ?? 0)
+            height: Math.round(completedCrop?.height ?? 0),
+            display: 'none',
           }}
         />
       </div>
