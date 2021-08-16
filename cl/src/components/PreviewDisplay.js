@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function textResizer(context, text) {
+  context.fillText(text, 35, 100)
+  context.fillText(text, 35, 200)
+}
+
 export default function SimplePaper() {
   const classes = useStyles();
   const canvasRef = React.useRef(null)
@@ -62,6 +67,8 @@ export default function SimplePaper() {
     ctx.drawImage(background,0,0);    */
     
     ctx.font = "50px Arial";
+    console.log(state.storyText)
+    textResizer(ctx, state.storyText)
     ctx.fillText(state.storyText, 35, 750);
   })
 
