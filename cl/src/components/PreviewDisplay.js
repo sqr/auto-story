@@ -43,22 +43,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function textResizer(canvas,context, text) {
   context.fillText(text, 35, 100)
   //context.fillText(text, 35, 200)
 
-  function init() {
-    window.requestAnimationFrame(draw);
-  }
+  var timeStep = (1/32);
+  var time = 0;
+  var frame = 0;
+
+  function loop() {
+    draw();
+
+    time += timeStep;
+    frame ++;
+
+    requestAnimationFrame(loop);
+}
+
 
   function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-
     var time = new Date();
-    context.fillText(text, Math.sin(time.getMilliseconds())*10, 200)
+    context.fillText(text, 100, Math.cos(time.getMilliseconds())+200)
     window.requestAnimationFrame(draw);
   }
-  init();
+  loop();
 }
 
 export default function SimplePaper() {
