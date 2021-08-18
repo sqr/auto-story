@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-
 import VideoDataContext from './VideoData/VideoData';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +43,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function textResizer(context, text) {
+function textResizer(canvas,context, text) {
   context.fillText(text, 35, 100)
-  context.fillText(text, 35, 200)
+  //context.fillText(text, 35, 200)
+
+  function init() {
+    window.requestAnimationFrame(draw);
+  }
+
+  function draw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    var time = new Date();
+    context.fillText(text, time.getMilliseconds()/4, 200)
+    window.requestAnimationFrame(draw);
+  }
+  init();
 }
 
 export default function SimplePaper() {
@@ -68,7 +78,7 @@ export default function SimplePaper() {
     
     ctx.font = "50px Arial";
     console.log(state.storyText)
-    textResizer(ctx, state.storyText)
+    textResizer(canvas, ctx, state.storyText)
     ctx.fillText(state.storyText, 35, 750);
   })
 
