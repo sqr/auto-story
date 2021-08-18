@@ -55,7 +55,7 @@ function textResizer(canvas,context, text) {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     var time = new Date();
-    context.fillText(text, time.getMilliseconds()/4, 200)
+    context.fillText(text, Math.sin(time.getMilliseconds())*10, 200)
     window.requestAnimationFrame(draw);
   }
   init();
