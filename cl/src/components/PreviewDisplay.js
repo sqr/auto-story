@@ -49,7 +49,7 @@ function textResizer(canvas,context, text) {
   context.fillText(text, 35, 100)
   //context.fillText(text, 35, 200)
 
-  var timeStep = (1/32);
+  var timeStep = (1/60);
   var time = 0;
   var frame = 0;
 
@@ -65,8 +65,8 @@ function textResizer(canvas,context, text) {
 
   function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    var time = new Date();
-    context.fillText(text, 100, Math.cos(time.getMilliseconds())+200)
+    //var time = new Date();
+    context.fillText(text, 100, Math.sin(time)*50+600)
     window.requestAnimationFrame(draw);
   }
   loop();

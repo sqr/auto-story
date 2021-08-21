@@ -156,7 +156,7 @@ export default function App() {
         onComplete={(c) => setCompletedCrop(c)}
       />
       <div>
-        <p>Preview</p>
+        {/* <p>Preview</p> */}
         <canvas
           ref={previewCanvasRef}
           // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
@@ -171,9 +171,9 @@ export default function App() {
         onClick={() =>
           uploadToServer(getResizedCanvas(), completedCrop)
         }>
-          Download Image
+          Process Video
         </Button>
-      <button
+      {/* <button
         type="button"
         disabled={!completedCrop?.width || !completedCrop?.height}
         onClick={() =>
@@ -181,7 +181,7 @@ export default function App() {
         }
       >
         Upload Image
-      </button>
+      </button> */}
     </div>
   );
 }
